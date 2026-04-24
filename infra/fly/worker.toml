@@ -1,0 +1,23 @@
+app = "meetingmate-worker"
+primary_region = "nrt"
+
+[build]
+  dockerfile = "apps/worker/Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  LOG_LEVEL = "info"
+
+[processes]
+  worker = "celery -A meetingmate_worker.celery_app worker -l info -Q meetingmate -c 4"
+  beat   = "celery -A meetingmate_worker.celery_app beat -l info"
+
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "1gb"
+  processes = ["worker"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+  processes = ["beat"]

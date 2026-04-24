@@ -1,0 +1,75 @@
+[project]
+name = "meetingmate-api"
+version = "1.0.0"
+description = "MeetingMate FastAPI backend — live STT relay, translation, notes"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi==0.115.5",
+  "uvicorn[standard]==0.32.1",
+  "pydantic==2.9.2",
+  "pydantic-settings==2.6.1",
+  "sqlalchemy==2.0.36",
+  "asyncpg==0.30.0",
+  "psycopg[binary]==3.2.3",
+  "alembic==1.14.0",
+  "redis==5.2.0",
+  "celery[redis]==5.4.0",
+  "httpx==0.27.2",
+  "websockets==13.1",
+  "anthropic==0.39.0",
+  "deepgram-sdk==3.7.7",
+  "voyageai==0.3.1",
+  "cohere==5.11.3",
+  "qdrant-client==1.12.1",
+  "boto3==1.35.63",
+  "python-jose[cryptography]==3.3.0",
+  "cryptography==43.0.3",
+  "structlog==24.4.0",
+  "sentry-sdk[fastapi]==2.18.0",
+  "langfuse==2.53.9",
+  "stripe==11.2.0",
+  "tenacity==9.0.0",
+  "orjson==3.10.11",
+  "python-multipart==0.0.17",
+  "slowapi==0.1.9",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.3.3",
+  "pytest-asyncio==0.24.0",
+  "pytest-cov==6.0.0",
+  "pytest-mock==3.14.0",
+  "httpx==0.27.2",
+  "ruff==0.7.4",
+  "mypy==1.13.0",
+  "testcontainers[postgres,redis]==4.8.2",
+  "types-boto3==1.0.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/meetingmate"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "TCH", "RUF"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers --cov=meetingmate --cov-report=term-missing"
