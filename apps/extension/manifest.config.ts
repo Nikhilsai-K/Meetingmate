@@ -1,5 +1,10 @@
 import { defineManifest } from '@crxjs/vite-plugin';
-import pkg from './package.json' assert { type: 'json' };
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const pkg = JSON.parse(
+  readFileSync(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf-8'),
+) as { version: string };
 
 // Manifest V3 — narrow host permissions (Google Meet only), explicit per-permission
 // justifications in docs/PERMISSIONS.md.

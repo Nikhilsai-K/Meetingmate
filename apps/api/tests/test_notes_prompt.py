@@ -3,9 +3,17 @@
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 
-# Add the worker src to path so we can import notes_generator under pytest
-sys.path.insert(0, "../worker/src")
+# Add the worker src to path so we can import notes_generator under pytest.
+# Resolve relative to this file rather than cwd so it works from any invocation.
+_WORKER_SRC = (Path(__file__).parent.parent.parent / "worker" / "src").resolve()
+if _WORKER_SRC.is_dir():
+    sys.path.insert(0, str(_WORKER_SRC))
+
+import pytest
+
+pytest.importorskip("meetingmate_worker.notes_generator")
 
 from meetingmate_worker.notes_generator import _build_prompt  # noqa: E402
 
