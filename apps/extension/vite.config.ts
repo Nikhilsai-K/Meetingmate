@@ -18,9 +18,4 @@ export default defineConfig({
     sourcemap: true,
     target: 'chrome120',
   },
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: ['./tests/unit/setup.ts'],
-  },
 });

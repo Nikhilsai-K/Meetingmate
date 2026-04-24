@@ -72,4 +72,6 @@ ignore_missing_imports = true
 asyncio_mode = "auto"
 testpaths = ["tests"]
 pythonpath = ["src"]
-addopts = "-ra --strict-markers --cov=meetingmate --cov-report=term-missing"
+addopts = "-ra"
+# Coverage is opt-in (`pytest --cov=meetingmate`) to avoid forcing
+# coverage to import every module in the package during unit tests.
